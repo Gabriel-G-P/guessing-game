@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessing Game</title>
+    <style>
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Varela+Round&display=swap");
+* {
+  box-sizing: border-box;
+  background-color: black;
+}
+body {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: 1px dashed white;
+}
+div.container {
+  width: 90%;
+  margin: auto;
+  border-radius: 1rem;
+}
+h1#game-title {
+  font-family: "Varela Round", sans-serif;
+  font-style: italic;
+  background-color: black;
+  border-radius: 1rem;
+  font-size: 5vw;
+  color: white;
+}
+table {
+  margin: auto;
+}
+th,
+td,
+tr {
+  vertical-align: top;
+}
+input.letter-input,
+th,
+td {
+  text-align: center;
+  font-size: 2vw;
+  width: calc(90% / 9);
+  background-color: white;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5);
+  margin: 1rem calc(5% / 9);
+  padding: 0.5rem;
+  border: 1px dashed black;
+}
+h1 {
+  color: white;
+  border: 1px dashed black;
+}
+td,
+th {
+  width: calc(90% / 8);
+}
+    </style>
+</head>
+<body>
+<div class="container">
+  <h1 id="game-title">GUESS THE PASSWORD!</h1>
+  <form id="password-form">
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+        <th>Wrong:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <td id="td0">X:</td>
+      <td id="td1">X:</td>
+      <td id="td2">X:</td>
+      <td id="td3">X:</td>
+      <td id="td4">X:</td>
+      <td id="td5">X:</td>
+      <td id="td6">X:</td>
+      <td id="td7">X:</td>
+    </tbody>
+  </table>
+</div>
+
+<h1>Hint: should not be used as a password<h1>
+    <script>
+// cache the password form
+const passwordForm = document.getElementById("password-form");
+
+// initialize game variables
+let phrase = "password";
+let index = 0;
+
+for (let char of phrase) {
+  const letterInput = document.createElement("input");
+  letterInput.type = "text";
+  letterInput.id = index.toString();
+  letterInput.classList.add("letter-input");
+  letterInput.maxLength = "1";
+  passwordForm.appendChild(letterInput);
+  index++;
+}
+
+passwordForm.addEventListener("change", function (event) {
+  const thisInput = event.target;
+  const guess = thisInput.value;
+  console.log(thisInput);
+  console.log(guess);
+  console.log(thisInput.id);
+
+  if (guess === phrase[parseInt(thisInput.id)]) {
+    thisInput.disabled = true;
+    thisInput.value = "Correct!";
+    thisInput.placeholder = guess;
+    thisInput.style.backgroundColor = "green";
+  } else {
+    console.log("Incorrect...");
+    document.getElementById(`td${thisInput.id}`).innerHTML += "<br>" + guess;
+    thisInput.value = "";
+    thisInput.style.backgroundColor = "red";
+  }
+});
+    </script>
+</body>
+</html>
